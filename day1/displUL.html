@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #item2{
+            border: 1px solid black;
+            padding: 5px;
+            width: 50px;
+            margin: 0;
+           
+        }
+        #item2:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <ul id="list">
+          <li id="item1">Item 1</li>
+          <li id="item2">Item 2</li>
+          <li id="item3">Item 3</li>
+        </ul>
+      </div>      
+</body>
+</html>
+
+<script>
+    const container= document.querySelector("#container")
+    let clickButoon=document.querySelector('#item2')
+    
+     clickButoon.addEventListener('click',displayAlert);
+
+      function displayAlert(){
+        let ulText=item2.parentNode.textContent; 
+        
+        alert(ulText)
+        var previous=item2.previousElementSibling;
+        var next=item2.nextElementSibling;
+        
+        if(previous){
+            console.log("previous sibling text:"+previous.textContent)
+        }
+        else if(next){
+            console.log("next sibling text:"+next.textContent)
+        }
+      }
+
+</script>
