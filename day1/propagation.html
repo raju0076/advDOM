@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Propagation</title>
+    <style>
+        .container {
+            border: 2px solid red;
+            padding: 20px;
+        }
+        .inner {
+            border: 2px solid blue;
+            padding: 20px;
+        }
+        .target {
+            border: 2px solid green;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        Container
+        <div class="inner">
+            Inner
+            <button class="target">Click Me</button>
+        </div>
+    </div>
+
+    <script>
+        // Container Listener
+        document.querySelector('.container').addEventListener('click', (e) => {
+            console.log('Container Clicked!');
+        });
+        // Inner Div Listener
+        document.querySelector('.inner').addEventListener('click', (e) => {
+            console.log('Inner Div Clicked!');
+            alert("hey raju")
+        });
+
+        // Target Button Listener
+        document.querySelector('.target').addEventListener('click', (e) => {
+            console.log('Target Button Clicked!');
+
+            // Uncomment the line below to stop propagation
+             e.stopPropagation();
+        });
+
+        // Capturing Listener on Container
+        document.querySelector('.container').addEventListener(
+            'click',
+            (e) => {
+                console.log('Container Captured Event!');
+            },
+            true 
+        );
+    </script>
+</body>
+</html>
