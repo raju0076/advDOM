@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 100px;
+            height: auto;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <button id="adding">Add Paragraph</button>
+    <button id="removing">Remove Paragraph</button>
+    <div id="cont"></div>
+</body>
+</html>
+<script>
+
+    var container = document.getElementById("cont")
+    var addpara= document.querySelector("#adding");
+   addpara.addEventListener("click",adding);
+   function adding(){
+        var para=document.createElement("p");
+        para.textContent='new para';
+      
+       container.appendChild(para);
+    
+    };
+
+    document.querySelector("#removing").addEventListener('click',remove());
+
+    function remove(){
+        if (container.lastChild){
+            container.removeChild(container.lastChild)
+        }
+        else{
+            alert('No para to remove')
+        }
+    }
+</script>
