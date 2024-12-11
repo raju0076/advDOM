@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .task {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 5px 0;
+    }
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <h1>Task Manager</h1>
+  <input type="text" id="taskInput" placeholder="Add a new task">
+  <button id="addTask">Add Task</button>
+  <input type="text" id="searchInput" placeholder="Search tasks">
+  <ul id="taskList"></ul>
+
+  <script>
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    const taskInput = document.getElementById('taskInput');
+    const searchInput = document.getElementById('searchInput');
+    const taskList = document.getElementById('taskList');
+    const addTaskButton = document.getElementById('addTask');
+
+    function renderTasks(filter = '') {
+      taskList.innerHTML = '';
+      tasks
+        .filter(task => task.text.toLowerCase().includes(filter.toLowerCase()))
+        .forEach(task => {
+          const taskItem = document.createElement('li');
+          taskItem.className = 'task';
+          if (task.completed) taskItem.classList.add('completed');
+          taskItem.innerHTML = `
+            <span>${task.text}</span>
+        <div>
+              <button onclick="toggleComplete(${task.id})">${task.completed ? 'Undo' : 'Complete'}</button>
+              <button onclick="removeTask(${task.id})">Remove</button>
+        </div>
+          `;
+          taskList.appendChild(taskItem);
+        });
+    }
+
+
+    addTaskButton.addEventListener('click', () => {
+      const text = taskInput.value.trim();
+      if (text) {
+        const newTask = {
+          id: Date.now(),
+          text,
+          completed: false,
+        };
+        tasks.push(newTask);
+        saveTasks();
+        renderTasks();
+        taskInput.value = '';
+      }
+    });
+
+  
+    function toggleComplete(id) {
+      tasks = tasks.map(task => task.id === id ? { ...task, completed: !task.completed } : task);
+      saveTasks();
+      renderTasks();
+    }
+
+    function removeTask(id) {
+      tasks = tasks.filter(task => task.id !== id);
+      saveTasks();
+      renderTasks();
+    }
+
+    function saveTasks() {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+    searchInput.addEventListener('input', (e) => {
+      renderTasks(e.target.value);
+    });
+    renderTasks();
+  </script>
+</body>
+</html>
