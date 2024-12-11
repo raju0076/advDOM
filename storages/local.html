@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+   <textarea name="notes" id="notes">enter your notes</textarea><br><br>
+   <button id="save">Save</button>
+   <button id="load">Load</button>
+   <button id="delete">Clear</button>
+</body>
+</html>
+
+<script>
+  const notesInput=document.getElementById('notes')
+  const saveButton=document.getElementById("save")
+  const uploadButton=document.getElementById('load');
+  const deletButton=document.getElementById('delete');
+
+  window.onload=() =>{
+    const savedNotes=localStorage.getItem("notes")
+    if(savedNotes){
+      notesInput.value=savedNotes
+    }
+  }
+
+
+  saveButton.addEventListener('click',saveNote)
+    function saveNote(){
+      console.log(localStorage.getItem('notes'));
+
+      
+      const inputNotes=notesInput.value.trim()
+      if(inputNotes){ 
+      const savingNote=localStorage.setItem('notes',inputNotes)
+      alert(" Notes saved successfully")
+      }
+      else{
+        alert("cann't store empty notes")
+      }
+
+    }
+
+  uploadButton.addEventListener('click' ,Adding);
+    
+  function Adding(){
+    const savedNotes=localStorage.getItem('notes')
+    if(savedNotes){
+      notesInput.value=savedNotes
+      alert('disaplay successfully')
+    }
+    else{
+      alert('there is no savedNotes')
+    }
+
+
+  }
+
+  deletButton.addEventListener('click',clearing);
+
+  function clearing(){
+    localStorage.removeItem('notes')
+    notesInput.value=""
+    alert('cleared successfully!')
+
+  }
+
+   
+</script>
